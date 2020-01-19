@@ -1,4 +1,4 @@
-<?php
+	<?php
 
 
 class user_model
@@ -11,7 +11,7 @@ public $message;
 
 public function RegisterUser($conn_obj)
 {
-    if (!($this->UserExists($conn_obj)))
+    if (!$this->UserExists($conn_obj))
     {
     $stmt = mysqli_prepare($conn_obj->conn,"insert into users values(null,?,?)");
     $ss = 'ss';
@@ -36,14 +36,15 @@ public function UserExists($conn_obj)
 {
     $stmt = mysqli_prepare($conn_obj->conn,"select user_id from users where email=?");
     $s = 's';
-    $stmt->bind_param($s,$email);
+    $stmt->bind_param($s,$this->email);
+    $stmt->bind_result($result);
     $stmt->execute();
-    $stmt->store_result();
-    if($stmt->num_rows>0)
+    if($stmt->fetch())
     {
         $stmt->close();
         $this->message = array("message"=>"user already exists");
         http_response_code(409);
+	
         return true;
     }
     $stmt->close();
