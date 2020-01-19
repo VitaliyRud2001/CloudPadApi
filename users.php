@@ -5,7 +5,7 @@ require_once 'DbModels/user_model.php';
 $conn_obj = new mysql_connect($host,$user,$password,$database);
 $conn_obj->connectToDatabase();
 
-if($_SERVER['request_method']=='POST')
+if($_SERVER['REQUEST_METHOD']=='POST')
 {
     if(isset($_POST['email']) && isset($_POST['password']))
     {
@@ -16,7 +16,7 @@ if($_SERVER['request_method']=='POST')
         $user->password = $password;
         $user->email = $email;
         $user->RegisterUser($conn_obj);
-        exit(json_encode($user->message));
+	exit(json_encode($user->message));
     }else{
         $message = array("message"=>"not enough parameters provided");
         http_response_code(404);
