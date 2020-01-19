@@ -1,6 +1,6 @@
 <?php
 $host = "localhost";
-$user = "root"
-$password = "usedrugs3";
+$user = "vitaliy";
+$password = "usedrugs_3Ah#D";
 $database = "CloudPad";
 ?>

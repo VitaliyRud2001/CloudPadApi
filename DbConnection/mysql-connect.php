@@ -19,7 +19,8 @@ class mysql_connect
 
     public function connectToDatabase()
     {
-        $this->conn=mysqli_connect($this->host,$this->user,$this->pass,$this->database) or die("Mysql error");
+        $this->conn=mysqli_connect($this->host,$this->user,$this->pass,$this->database) or die("mysql connection error");
+        
     }
 
 
