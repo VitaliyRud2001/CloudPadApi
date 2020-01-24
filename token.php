@@ -24,6 +24,10 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
             $answer = array("message"=>"incorrect password or login");
             exit(json_encode($answer));
         }
+    }else{
+      http_response_code(404);
+      $answer = array("message" => "not enough parameters provided" );
+      exit(json_encode($answer));
     }
 
 
