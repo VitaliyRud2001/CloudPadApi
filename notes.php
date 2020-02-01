@@ -6,7 +6,44 @@ require_once 'DbModels/note_model.php';
 $conn_obj = new mysql_connect($host,$user,$password,$database);
 $conn_obj->connectToDatabase();
 header('Content-type: application/json');
-if($_SERVER['REQUEST_METHOD']=='POST') {
+
+
+if($_SERVER['REQUEST_METHOD']=='GET')
+{
+    $_GET = json_decode(file_get_contents('php://input'), true);
+    if(isset($_GET['token'])) {
+        $token = $_GET['token'];
+        $user_token = new userToken_model();
+        $user_token->token = $token;
+        if($user_token->TokenExists($conn_obj))
+        {
+            $notes = note_model::GetNotes($conn_obj,$user_token->user_id);
+            if($notes!=null)
+            {
+                http_response_code(200);
+                exit(json_encode($notes));
+            }
+            else
+            {
+                http_response_code(404);
+                $answer = array("message"=>"content not found");
+                exit(json_encode($answer));
+            }
+        }
+      http_response_code(401);
+      $answer = array("message"=>"Incorrect token");
+      exit(json_encode($answer));
+    }
+    http_response_code(404);
+    $answer = array("message" => "not enough parameters provided" );
+    exit(json_encode($answer));
+
+}
+
+
+
+
+else if($_SERVER['REQUEST_METHOD']=='POST') {
   $_POST = json_decode(file_get_contents('php://input'), true);
     if (isset($_POST['token']) && isset($_POST['note'])) {
       $token = $_POST['token'];
