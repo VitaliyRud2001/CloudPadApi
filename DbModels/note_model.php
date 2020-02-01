@@ -41,6 +41,24 @@ class note_model
         }
         return false;
     }
+
+    public static function GetNotes($conn_obj,$user_id)
+    {
+        $info = array();
+        $stmt = mysqli_prepare($conn_obj->conn,"select users.user_id,users.email, note.note_id, note.note from users inner join note on note.user_id=users.user_id where users.user_id=?;");
+        $stmt->bind_param('i',$user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while($row=$result->fetch_row())
+        {
+            $arr = array("user_id"=>$row[0],"user_email"=>$row[1],"note_id"=>$row[2],"note"=>$row[3]);
+            $info[]=$arr;
+        }
+        exit(json_encode($info));
+    }
+
+
+
 };
 
 
