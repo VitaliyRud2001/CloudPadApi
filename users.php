@@ -5,6 +5,7 @@ require_once 'DbModels/user_model.php';
 $conn_obj = new mysql_connect($host,$user,$password,$database);
 $conn_obj->connectToDatabase();
 
+
 if($_SERVER['REQUEST_METHOD']=='POST')
 {
     if(isset($_POST['email']) && isset($_POST['password']))
