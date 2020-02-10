@@ -10,7 +10,7 @@ header('Content-type: application/json');
 
 if($_SERVER['REQUEST_METHOD']=='GET')
 {
-    $_GET = json_decode(file_get_contents('php://input'), true);
+   
     if(isset($_GET['token'])) {
         $token = $_GET['token'];
         $user_token = new userToken_model();
